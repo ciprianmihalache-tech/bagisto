@@ -4631,6 +4631,11 @@ return [
     ],
 
     'components' => [
+        'form' => [
+            'password-hide' => 'Hide Password',
+            'password-show' => 'Show Password',
+        ],
+
         'layouts' => [
             'header' => [
                 'account-title' => 'Account',

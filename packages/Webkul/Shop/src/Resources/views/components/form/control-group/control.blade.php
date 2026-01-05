@@ -7,7 +7,6 @@
     @case('hidden')
     @case('text')
     @case('email')
-    @case('password')
     @case('number')
         <v-field
             v-slot="{ field, errors }"
@@ -22,6 +21,37 @@
                 {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'mb-1.5 w-full rounded-lg border px-5 py-3 text-base font-normal text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 max-sm:px-4 max-md:py-2 max-sm:text-sm']) }}
             >
         </v-field>
+        @break
+
+    @case('password')
+        <v-password-visibility>
+            <template v-slot="{ isPasswordVisible, togglePasswordVisibility }">
+                <v-field
+                    v-slot="{ field, errors }"
+                    {{ $attributes->only(['name', ':name', 'value', ':value', 'v-model', 'rules', ':rules', 'label', ':label']) }}
+                    name="{{ $name }}"
+                >
+                    <div class="relative">
+                        <input
+                            :type="isPasswordVisible ? 'text' : 'password'"
+                            name="{{ $name }}"
+                            v-bind="field"
+                            :class="[errors.length ? 'border !border-red-500 hover:border-red-500' : '']"
+                            {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'mb-1.5 w-full rounded-lg border px-5 py-3 text-base font-normal text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 max-sm:px-4 max-md:py-2 max-sm:text-sm ltr:pr-10 rtl:pl-10']) }}
+                        >
+                        <span
+                            class="icon-eye absolute top-1/2 -translate-y-1/2 cursor-pointer text-2xl text-gray-500 ltr:right-3 rtl:left-3"
+                            :class="{ 'icon-eye-hide': isPasswordVisible, 'icon-eye': !isPasswordVisible }"
+                            @click="togglePasswordVisibility"
+                            role="button"
+                            tabindex="0"
+                            :aria-label="isPasswordVisible ? '@lang('shop::app.components.form.password-hide')' : '@lang('shop::app.components.form.password-show')'"
+                            @keyup.enter="togglePasswordVisibility"
+                        ></span>
+                    </div>
+                </v-field>
+            </template>
+        </v-password-visibility>
         @break
 
     @case('file')
@@ -233,3 +263,35 @@
             {{ $slot }}
         </v-field>
 @endswitch
+
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="v-password-visibility-template"
+    >
+        <div>
+            <slot
+                :is-password-visible="isPasswordVisible"
+                :toggle-password-visibility="togglePasswordVisibility"
+            ></slot>
+        </div>
+    </script>
+
+    <script type="module">
+        app.component('v-password-visibility', {
+            template: '#v-password-visibility-template',
+
+            data() {
+                return {
+                    isPasswordVisible: false,
+                };
+            },
+
+            methods: {
+                togglePasswordVisibility() {
+                    this.isPasswordVisible = !this.isPasswordVisible;
+                },
+            },
+        });
+    </script>
+@endPushOnce

@@ -473,6 +473,11 @@ return [
             'default-toggle' => 'Default Toggle',
         ],
 
+        'form' => [
+            'password-hide' => 'Hide Password',
+            'password-show' => 'Show Password',
+        ],
+
         'media' => [
             'index' => [
                 'add-attachments' => 'Add attachments',

@@ -160,6 +160,21 @@ img.lazy {
         content: "\e918";
     }
 
+    .icon-eye-hide:before {
+        content: "\e918";
+    }
+
+    .icon-eye-hide:after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        background-color: currentColor;
+        transform: rotate(45deg);
+        top: 0;
+        left: calc(50% - 1px);
+    }
+
     .icon-filter-1:before {
         content: "\e919";
     }

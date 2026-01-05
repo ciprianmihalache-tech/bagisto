@@ -49,29 +49,20 @@
                         </x-admin::form.control-group>
 
                         <!-- Password -->
-                        <x-admin::form.control-group class="relative w-full">
+                        <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.users.sessions.password')
                             </x-admin::form.control-group.label>
                     
                             <x-admin::form.control-group.control 
                                 type="password" 
-                                class="w-[254px] max-w-full ltr:pr-10 rtl:pl-10" 
+                                class="w-[254px] max-w-full" 
                                 id="password"
                                 name="password" 
                                 rules="required|min:6" 
                                 :label="trans('admin::app.users.sessions.password')"
                                 :placeholder="trans('admin::app.users.sessions.password')"
                             />
-                    
-                            <span 
-                                class="icon-view absolute top-[42px] -translate-y-2/4 cursor-pointer text-2xl ltr:right-2 rtl:left-2"
-                                onclick="switchVisibility()"
-                                id="visibilityIcon"
-                                role="presentation"
-                                tabindex="0"
-                            >
-                            </span>
                     
                             <x-admin::form.control-group.error control-name="password" />
                         </x-admin::form.control-group>
@@ -107,15 +98,4 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            function switchVisibility() {
-                let passwordField = document.getElementById("password");
-                let visibilityIcon = document.getElementById("visibilityIcon");
-
-                passwordField.type = passwordField.type === "password" ? "text" : "password";
-                visibilityIcon.classList.toggle("icon-view-close");
-            }
-        </script>
-    @endpush
 </x-admin::layouts.anonymous>
